@@ -4,6 +4,8 @@ You add your credentials to the `PASSWORD` and `EMAIL` fields at the top and exe
 
 MailShell currently only works with a Gmail account.
 
+MailShell depends on the [gmail gem](https://github.com/gmailgem/gmail).
+
 # Usage
 After adding your credentials to the fields specified above and executing the daemon, send an email to yourself on your
 Gmail account with the following syntax in the subject line:
