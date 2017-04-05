@@ -1,6 +1,6 @@
 # MailShell
 MailShell is a daemon that allows you to execute shell commands over your email.
-You add your credentials to the `PASSWORD` and `EMAIL` fields at the top and execute the daemon.
+You add your credentials to the `PASSWORD` and `EMAIL` fields at the top of [mailshell.rb](https://github.com/nabeelomer/MailShell/blob/master/mailshell.rb) file and execute the daemon. You might need to run `chmod +x mailshell.rb`.
 
 MailShell currently only works with a Gmail account.
 
