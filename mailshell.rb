@@ -9,6 +9,8 @@ PASSWORD = 'yourpassword'.freeze
 
 puts "daemon pid: #{Process.pid}"
 
+Process.daemon
+
 ex = nil
 
 gmail = Gmail.connect(EMAIL, PASSWORD)
