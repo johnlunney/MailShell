@@ -15,7 +15,7 @@ mailshell <command>
 MailShell will then parse the command, execute it, and then email you the output of the command.
 It does not matter what the body of the email contains.
 
-MailShell looks for emails starting with the string `mailshell` every two minutes.
+MailShell looks for command emails in your email account every two minutes.
 
 MailShell will delete the command email after sending you the output.
 
