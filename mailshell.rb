@@ -4,9 +4,8 @@ require 'gmail'
 
 exit unless File.new("/tmp/mailshell.lock").flock( File::LOCK_NB | File::LOCK_EX )
 
-
-EMAIL = 'nabeelkomer@gmail.com'.freeze
-PASSWORD = 'tudslyzdynqjvrxy'.freeze
+EMAIL = 'youremail@gmail.com'.freeze
+PASSWORD = 'yourpassword'.freeze
 
 puts "daemon pid: #{Process.pid}"
 
