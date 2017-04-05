@@ -1,11 +1,11 @@
 # MailShell
-MailShell is a program that allows you to execute shell commands over your email.
-You add your credentials to the `PASSWORD` and `EMAIL` fields at the top and execute the program.
+MailShell is a daemon that allows you to execute shell commands over your email.
+You add your credentials to the `PASSWORD` and `EMAIL` fields at the top and execute the daemon.
 
 MailShell currently only works with a Gmail account.
 
 # Usage
-After adding your credentials to the fields specified above and executing the program, send an email to yourself on your
+After adding your credentials to the fields specified above and executing the daemon, send an email to yourself on your
 Gmail account with the following syntax in the subject line:
 ```
 mailshell <command>
