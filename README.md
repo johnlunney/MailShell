@@ -1,4 +1,6 @@
 # MailShell
+(This is a work in progress, I'm working to make MailShell act like an actual systemd daemon.)
+
 MailShell is a daemon that allows you to execute shell commands over your email.
 You add your credentials to the `PASSWORD` and `EMAIL` fields at the top of [mailshell.rb](https://github.com/nabeelomer/MailShell/blob/master/mailshell.rb) file and execute the daemon (It would be a good idea generate a application specific password to use with MailShell). You might need to run `chmod +x mailshell.rb`.
 
