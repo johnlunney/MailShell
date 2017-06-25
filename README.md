@@ -1,25 +1,31 @@
 # MailShell
-(This is a work in progress, I'm working to make MailShell act like an actual systemd daemon.)
+MailShell is a Linux (systemd compatible) daemon that allow you to execute shell commands over your email.
 
-MailShell is a daemon that allows you to execute shell commands over your email.
-You add your credentials to the `PASSWORD` and `EMAIL` fields at the top of [mailshell.rb](https://github.com/nabeelomer/MailShell/blob/master/mailshell.rb) file and execute the daemon (It would be a good idea generate a application specific password to use with MailShell). You might need to run `chmod +x mailshell.rb`.
+MailShell depends on [ruby]() and the [gmail gem]().
 
-MailShell currently only works with a Gmail account.
-
-MailShell depends on the [gmail gem](https://github.com/gmailgem/gmail).
-
-# Usage
-After adding your credentials to the fields specified above and executing the daemon, send an email to yourself on your
-Gmail account with the following syntax in the subject line:
+# Installing MailShell
+Installing MailShell is as simple as
+```zsh
+curl -c https://github.com/nabeelomer/MailShell/blob/master/MailShell-1.0.0.gem
+gem install ./MailShell-1.0.0.gem
 ```
+This will cause the service to be installed, configured, and start running.
+
+Edit `/etc/mailshell` and add your Gmail username and password in the format `username@gmail.com|password` then restart
+MailShell by running
+```zsh
+sudo service mailshell restart
+```
+
+# Using MailShell
+To make MailShell execute a command send and email to your own Gmail account with the subject line written in the syntax
+```zsh
 mailshell <command>
 ```
-MailShell will then parse the command, execute it, and then email you the output of the command.
-It does not matter what the body of the email contains.
+This will cause MailShell to execute the <command> and email you back with the output of the command.
+The contents of the body of the email do not matter.
 
-MailShell looks for command emails in your email account every two minutes.
-
-MailShell will delete the command email after sending you the output.
+MailShell will poll the Gmail account every two minutes to check for command emails.
 
 # License
 MIT License
