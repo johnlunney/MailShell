@@ -1,1 +1,0 @@
-{"rustc":4179404409678140070,"features":"[]","target":740743625231842346,"profile":731176819336294830,"deps":[["openssl v0.9.14",8932337838499725978],["regex v0.2.2",4205322700130331441]],"local":{"MtimeBased":[[1497720715,140281747],"/home/nabeel/src/MailShell/target/debug/.fingerprint/atarashii_imap-d76236733dbd8a23/dep-lib-atarashii_imap-d76236733dbd8a23"]},"rustflags":[]}
