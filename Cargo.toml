@@ -1,8 +1,0 @@
-[package]
-name = "MailShell"
-version = "0.1.0"
-authors = ["Nabeel Omer <nabeelkomer@gmail.com>"]
-
-[dependencies]
-atarashii_imap = { path = "atarashii_imap", version = "*" }
-openssl = "0.9.12"

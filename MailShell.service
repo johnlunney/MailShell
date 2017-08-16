@@ -1,0 +1,9 @@
+[Unit]
+Description=MailShell: shell on mail
+
+[Service]
+ExecStart=/home/nabeel/src/mailshell/bin/mailshell.rb nabeelkomer@gmail.com mtrujtixqrkigofi
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
