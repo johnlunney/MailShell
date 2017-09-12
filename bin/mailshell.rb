@@ -1,6 +1,4 @@
 #! /usr/bin/ruby
-
-
 require 'gmail'
 
 # Process.daemon

@@ -13,5 +13,4 @@ Gem::Specification.new do |s|
   s.executables << 'mailshell.rb'
   s.add_runtime_dependency 'gmail'
   s.add_runtime_dependency 'mail'
-  s.post_install_message = `cp MailShell.service /etc/systemd/system`
 end
