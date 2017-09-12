@@ -1,20 +1,11 @@
 # MailShell
-MailShell is a Linux (systemd compatible) daemon that allow you to execute shell commands over your email.
-
-MailShell depends on [ruby]() and the [gmail gem]().
+MailShell is a Linux daemon that allow you to execute shell commands over your email.
 
 # Installing MailShell
 Installing MailShell is as simple as
 ```zsh
 curl -c https://github.com/nabeelomer/MailShell/blob/master/MailShell-1.0.0.gem
 gem install ./MailShell-1.0.0.gem
-```
-This will cause the service to be installed, configured, and start running.
-
-Edit `/etc/mailshell` and add your Gmail username and password in the format `username@gmail.com|password` then restart
-MailShell by running
-```zsh
-sudo service mailshell restart
 ```
 
 # Using MailShell

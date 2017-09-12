@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.authors     = ['Nabeel Omer']
   s.email       = 'nabeelkomer@gmail.com'
   s.platform    = Gem::Platform::RUBY
-  s.files       = ['bin/mailshell.rb', 'MailShell.service', 'README.md']
+  s.files       = ['bin/mailshell.rb']
   s.homepage    = 'https://github.com/nabeelomer/MailShell'
   s.license     = 'MIT'
   s.executables << 'mailshell.rb'
