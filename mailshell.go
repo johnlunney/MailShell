@@ -20,12 +20,13 @@ package main
 import (
 	"bytes"
 	"flag"
+	"fmt"
 	"log"
 	"net/smtp"
 	"os/exec"
 	"strings"
 	"time"
-	"fmt"
+
 	imap "github.com/emersion/go-imap"
 	"github.com/emersion/go-imap/client"
 )
@@ -35,6 +36,7 @@ func checkForCommandEmail(uname string, password string, imaps string) string {
 	c, err := client.DialTLS(imaps, nil)
 	if err != nil {
 		log.Fatal(err)
+		return ""
 	}
 	log.Println("Connected")
 
@@ -44,6 +46,7 @@ func checkForCommandEmail(uname string, password string, imaps string) string {
 	// Login
 	if err := c.Login(uname, password); err != nil {
 		log.Fatal(err)
+		return ""
 	}
 	log.Println("Logged in")
 
@@ -51,14 +54,12 @@ func checkForCommandEmail(uname string, password string, imaps string) string {
 	mbox, err := c.Select("INBOX", false)
 	if err != nil {
 		log.Fatal(err)
+		return ""
 	}
-	log.Println("Flags for INBOX:", mbox.Flags)
 
-	// Get the last 4 messages
 	from := uint32(1)
 	to := mbox.Messages
 	if mbox.Messages > 3 {
-		// We're using unsigned integers here, only substract if the result is > 0
 		from = mbox.Messages - 3
 	}
 	seqset := new(imap.SeqSet)
@@ -71,8 +72,9 @@ func checkForCommandEmail(uname string, password string, imaps string) string {
 	}()
 
 	for msg := range messages {
-		if strings.Split(msg.Envelope.Subject, "|")[0] == "mailshell" {
-			return strings.Split(msg.Envelope.Subject, "|")[1]
+		if strings.Split(msg.Envelope.Subject, " ")[0] == "mailshell" && (msg.Envelope.Sender[0].MailboxName+"@"+msg.Envelope.Sender[0].HostName) == uname {
+			var array = strings.Split(msg.Envelope.Subject, " ")
+			return strings.Join(append(array[:0], array[0+1:]...)[:], " ")
 		}
 	}
 
@@ -94,11 +96,12 @@ func respond(uname string, password string, smtps string, text string) {
 		auth,
 		uname,
 		[]string{uname},
-		[]byte(text),
+		[]byte("To: "+uname+"\r\n"+"Subject: Mailshell Command Result\r\n"+"\r\n"+text+"\r\n"),
 	)
 	if err != nil {
 		log.Fatal(err)
 	}
+	log.Println("Response Complete")
 }
 
 func main() {
@@ -121,6 +124,7 @@ func main() {
 		log.Fatal("Empty username and password")
 		return
 	}
+
 	log.Println("Mailshell v2.0\nShell: " + *shell + "\nServer: " + *imaps + "\nUsername: " + *uname)
 
 	for {
