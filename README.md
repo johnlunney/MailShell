@@ -1,6 +1,8 @@
 # MailShell
 MailShell is a daemon that allows you to execute shell commands over your email.
 
+Its useful in situations where remote access is required and using SSH is not possible. For example on machines with dynamic IP addresses.
+
 # Usage
 ```zsh
 $ mailshell -help
