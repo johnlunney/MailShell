@@ -20,19 +20,19 @@ package main
 import (
 	"bytes"
 	"flag"
-	"fmt"
 	"log"
+	"net/smtp"
 	"os/exec"
 	"strings"
 	"time"
-
+	"fmt"
 	imap "github.com/emersion/go-imap"
 	"github.com/emersion/go-imap/client"
 )
 
-func checkForCommandEmail(uname string, password string, server string) string {
+func checkForCommandEmail(uname string, password string, imaps string) string {
 	//I haven't yet figured out how to use go-imap, this was an example in the readme that I stole and used.
-	c, err := client.DialTLS(server, nil)
+	c, err := client.DialTLS(imaps, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -71,7 +71,7 @@ func checkForCommandEmail(uname string, password string, server string) string {
 	}()
 
 	for msg := range messages {
-		if strings.Split(msg.Envelope.Subject, "")[0] == "mailshell" {
+		if strings.Split(msg.Envelope.Subject, "|")[0] == "mailshell" {
 			return strings.Split(msg.Envelope.Subject, "|")[1]
 		}
 	}
@@ -82,21 +82,49 @@ func checkForCommandEmail(uname string, password string, server string) string {
 	return ""
 }
 
+func respond(uname string, password string, smtps string, text string) {
+	auth := smtp.PlainAuth(
+		"",
+		uname,
+		password,
+		strings.Split(smtps, ":")[0],
+	)
+	err := smtp.SendMail(
+		smtps,
+		auth,
+		uname,
+		[]string{uname},
+		[]byte(text),
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
 func main() {
-	var server = flag.String("imapserver", "imap.gmail.com:993", "IMAP server address, defaults to Gmail")
+	var smtps = flag.String("smtpServer", "smtp.gmail.com:587", "SMTP server address")
+	var imaps = flag.String("imapServer", "imap.gmail.com:993", "IMAP server address")
 	var uname = flag.String("username", "", "Email Username")
 	var password = flag.String("password", "", "Email Password")
-	var shell = flag.String("shell", "/bin/sh", "Path to the shell you prefer, defaults to `sh`")
+	var shell = flag.String("shell", "/bin/sh", "Path to the shell you prefer")
+	var help = flag.Bool("help", false, "Show this help text")
 	// var frequency = flag.Int("pollFrequency", 2, "How frequently should mailshelld poll your email")
 	flag.Parse()
+
+	if *help {
+		fmt.Println("Usage: mailshell [options]\n\nOptions:")
+		flag.PrintDefaults()
+		return
+	}
 
 	if *uname == "" || *password == "" {
 		log.Fatal("Empty username and password")
 		return
 	}
+	log.Println("Mailshell v2.0\nShell: " + *shell + "\nServer: " + *imaps + "\nUsername: " + *uname)
 
 	for {
-		var command = checkForCommandEmail(*uname, *password, *server)
+		var command = checkForCommandEmail(*uname, *password, *imaps)
 		if command != "" {
 			log.Println("Executing command: " + command)
 			func() {
@@ -108,7 +136,7 @@ func main() {
 				if err != nil {
 					log.Fatal(err)
 				}
-				fmt.Println(out.String())
+				respond(*uname, *password, *smtps, out.String())
 			}()
 		} else {
 			log.Println("Nothing to do")
