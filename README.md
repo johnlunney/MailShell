@@ -5,8 +5,6 @@ Its useful in situations where remote access is required and using SSH is not po
 
 Binaries for macOS and Linux are [available](https://github.com/nabeelomer/MailShell/releases/tag/v2.0).
 
-**Mailshell doesn't verify which account the command email came from.**
-
 # Usage
 ```zsh
 $ mailshell -help
